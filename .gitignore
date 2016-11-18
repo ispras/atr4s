@@ -1,0 +1,25 @@
+.classpath
+.settings
+.project
+.gradle
+.cache-*
+.idea
+atr4s.iml
+atr4s.iws
+atr4s.ipr
+build/
+out/
+projectFilesBackup/
+*.pyc
+tmp/
+experiments*
+experiment.pid
+
+#needed for hiveContext
+derby.log
+metastore_db
+
+#too big data files
+info-measure.txt
+COHA_term_occurrences.txt
+w2vConcepts.model

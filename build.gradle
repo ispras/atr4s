@@ -1,0 +1,59 @@
+apply plugin: 'scala'
+apply plugin: 'idea'
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+task recognize(dependsOn: 'classes', type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'ru.ispras.atr.AutomaticTermsRecognizer'
+    new File("$atr_recognize_wd").mkdirs()
+    workingDir = "$atr_recognize_wd"
+    jvmArgs = ["-Xmx${atr_recognize_xmx}"]
+    if (project.hasProperty("dataset") && project.hasProperty("topCount")) {
+        if (project.hasProperty("config")) {
+            if (project.hasProperty("output"))
+                args([dataset, topCount, config, output])
+            else
+                args([dataset, topCount, config])
+        } else {
+            args([dataset, topCount])
+        }
+    } else {
+        args = []
+    }
+}
+
+dependencies {
+    compile 'org.scala-lang:scala-library:2.11.7'
+
+    // Emory nlp preprocessing
+    compile group: 'edu.emory.mathcs.nlp', name: 'nlp4j-api', version: '1.1.3'
+    compile group: 'edu.emory.mathcs.nlp', name: 'nlp4j-english', version: '1.1.3'
+
+    //for PU-ATR
+    compile 'ru.ispras:pu4spark:0.1'
+
+    //for PU-ATR and Voting
+    compile group: 'org.apache.spark', name: 'spark-core_2.11', version: '1.6.2'
+    //  for ranking by windows
+    compile 'org.apache.spark:spark-hive_2.11:1.6.2'
+
+    //for NovelTopicModel (topic modeling itself)
+    compile 'ru.ispras.modis:tm_2.11:1.0'
+
+    //for KeyConceptRelatedness (namely, for spire for word2vec-scala)
+    compile 'org.spire-math:spire_2.11:0.11.0'
+    //stemmer for word2vec (phrases)
+    compile "com.github.rholder:snowball-stemmer:1.3.0.581.1"
+
+    //for unit test
+    compile 'org.scalatest:scalatest_2.11:2.2.6'
+    compile 'com.databricks:spark-csv_2.11:1.4.0'
+
+    //log utils - currently it is preferred to old log4j for evaluation only (withExtraAppender)
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.4'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.4'
+}

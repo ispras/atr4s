@@ -1,0 +1,6 @@
+Term,TermFrequency,DocFrequency,LinkProbability
+android,3,2,0.2
+misspeling,2,1,0.1
+something,4,2,0
+new_method,15,10,0
+machine_learning,25,20,0.4
