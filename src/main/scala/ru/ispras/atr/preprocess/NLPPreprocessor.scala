@@ -61,7 +61,7 @@ trait NLPPreprocessorConfig {
 }
 
 object NLPPreprocessorConfig {
-  val subclasses = List(
+  val subclasses = List(classOf[OpenNLPPreprocessorConfig],
     classOf[EmoryNLPPreprocessorConfig],
     classOf[CachingNLPPreprocessorConfig],
     classOf[DummyNLPPreprocessorConfig])

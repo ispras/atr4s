@@ -10,21 +10,21 @@ TBD
 
 ## Implemented algorithms
 
-1) AvgTermFreq
-2)  ResidualIDF
-3)  TotalTF-IDF
-4)  CValue
-5)  Basic
-6)  ComboBasic
-7)  PostRankDC
-8)  Relevance
-9)  Weirdness
-10)  DomainPertinence
-11)  NovelTopicModel
-12)  LinkProbability
-13)  KeyConceptRelatedness
-14)  Voting
-15)  PU-ATR
+1. AvgTermFreq
+2.  ResidualIDF
+3.  TotalTF-IDF
+4.  CValue
+5.  Basic
+6.  ComboBasic
+7.  PostRankDC
+8.  Relevance
+9.  Weirdness
+10.  DomainPertinence
+11.  NovelTopicModel
+12.  LinkProbability
+13.  KeyConceptRelatedness
+14.  Voting
+15.  PU-ATR
 
 
 [//]: # (See details in the paper.)
@@ -38,6 +38,10 @@ Scala 2.11
 Spark 1.5+ (for Voting and PU-ATR)
 
 [Emory nlp4j](https://emorynlp.github.io/nlp4j/)
+
+([Apache OpenNLP](http://opennlp.apache.org/) is also supported, but
+preliminary experiments showed that its quality is not better than Emory nlp4j, while it is not thread-safe;
+if you are going to use OpenNLP, download models from Apache OpenNLP and place them into `src/main/resources`)
 
 ([Stanford CoreNLP](http://stanfordnlp.github.io/CoreNLP/) is also supported by
 [this helper](), which is moved to a separate project due to GPL licensing of Stanford CoreNLP).

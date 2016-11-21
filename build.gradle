@@ -33,6 +33,9 @@ dependencies {
     compile group: 'edu.emory.mathcs.nlp', name: 'nlp4j-api', version: '1.1.3'
     compile group: 'edu.emory.mathcs.nlp', name: 'nlp4j-english', version: '1.1.3'
 
+    // Apache OpenNLP preprocessing
+    compile group: 'org.apache.opennlp', name: 'opennlp-tools', version: '1.6.0'
+
     //for PU-ATR
     compile 'ru.ispras:pu4spark:0.1'
 
@@ -44,6 +47,7 @@ dependencies {
     //for NovelTopicModel (topic modeling itself)
     compile 'ru.ispras.modis:tm_2.11:1.0'
 
+    // spire for word2vec-scala
     //for KeyConceptRelatedness (namely, for spire for word2vec-scala)
     compile 'org.spire-math:spire_2.11:0.11.0'
     //stemmer for word2vec (phrases)
