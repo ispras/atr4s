@@ -1,5 +1,10 @@
+plugins {
+    id "com.jfrog.bintray" version "1.7.1"
+}
+
 apply plugin: 'scala'
 apply plugin: 'idea'
+apply plugin: 'maven-publish'
 
 repositories {
     mavenCentral()
@@ -23,6 +28,90 @@ task recognize(dependsOn: 'classes', type: JavaExec) {
         }
     } else {
         args = []
+    }
+}
+
+
+def siteUrl = 'https://github.com/ispras/atr4s'      // Homepage URL of the library
+def gitUrl = 'https://github.com/ispras/atr4s.git'   // Git repository URL
+
+// custom tasks for creating source/javadoc jars
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: scaladoc) {
+    classifier = 'javadoc'
+    from scaladoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar, javadocJar
+}
+
+def pomConfig = {
+    licenses {
+        license {
+            name "The Apache Software License, Version 2.0"
+            url "http://www.apache.org/licenses/LICENSE-2.0.txt"
+            distribution "repo"
+        }
+    }
+    developers {
+        developer {
+            id "astrakhantsev"
+            name "Nikita Astrakhantsev"
+            email "astrakhantsev@ispras.ru"
+        }
+    }
+    scm {
+        connection gitUrl
+        developerConnection gitUrl
+        url siteUrl
+    }
+}
+
+publishing {
+    publications {
+        MyPublication(MavenPublication) {
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+
+            groupId 'ru.ispras'
+            artifactId 'atr4s'
+            version '1.0'
+
+            pom.withXml {
+                def root = asNode()
+                root.appendNode('description', 'Toolkit with State-of-the-art Automatic Terms Recognition Methods in Scala')
+                root.appendNode('name', 'Automatic Term Recognition in Scala')
+                root.appendNode('url', siteUrl)
+                root.children().last() + pomConfig
+            }
+        }
+    }
+}
+
+bintray {
+    user = bintrayUser
+    key = bintrayApiKey
+    publications = ['MyPublication']
+    publish = true //If version should be auto published after an upload
+    override = true
+    pkg {
+        repo = 'maven'
+        name = 'atr4s'
+        userOrg = 'ispras'
+        licenses = ['Apache-2.0']
+        vcsUrl = 'https://github.com/ispras/atr4s.git'
+        version {
+            name = '1.0'
+            gpg {
+                sign = true //Determines whether to GPG sign the files. The default is false
+            }
+        }
     }
 }
 
