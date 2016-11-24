@@ -4,9 +4,10 @@ An open-source library for [Automatic Term Recognition](https://en.wikipedia.org
 written in Scala.
 
 To cite ATR4S:
-TBD
 
-[//]: # (N.Astrakhantsev. ATR4S: Toolkit with State-of-the-art Automatic Terms Recognition Methods in Scala)
+N.Astrakhantsev.
+ATR4S: Toolkit with State-of-the-art Automatic Terms Recognition Methods in Scala.
+arXiv preprint [arXiv:1611.07804](http://arxiv.org/abs/1611.07804), 2016.
 
 ## Implemented algorithms
 
