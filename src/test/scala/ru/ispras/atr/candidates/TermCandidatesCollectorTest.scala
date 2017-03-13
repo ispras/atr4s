@@ -48,13 +48,13 @@ class TermCandidatesCollectorTest extends FunSuite {
   )
 
   test("testCollectFreqBigram") {
-    val actual: Seq[TermCandidate] = TССConfig(nGramSizes=Seq(2), minTermFreq=2).build().collect(twoDocsDataset)
+    val actual: Seq[TermCandidate] = TCCConfig(nGramSizes=Seq(2), minTermFreq=2).build().collect(twoDocsDataset)
     val expected = information_retrieval
     assert(expected === actual)
   }
 
   test("testCollectAllBigram") {
-    val actual = TССConfig(nGramSizes=Seq(2), minTermFreq=1).build().collect(twoDocsDataset).toSet
+    val actual = TCCConfig(nGramSizes=Seq(2), minTermFreq=1).build().collect(twoDocsDataset).toSet
     val expected = (information_retrieval :+
       TermCandidate(Seq(
         TermOccurrence(
@@ -67,7 +67,7 @@ class TermCandidatesCollectorTest extends FunSuite {
   }
 
   test("testCollectUnigram") {
-    val actual = TССConfig(nGramSizes=Seq(1), minTermFreq=2).build().collect(twoDocsDataset).toSet
+    val actual = TCCConfig(nGramSizes=Seq(1), minTermFreq=2).build().collect(twoDocsDataset).toSet
     val expected = Set(
       TermCandidate(Seq(
         TermOccurrence(

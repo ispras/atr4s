@@ -30,7 +30,7 @@ class CachingTermCandidatesCollector(cacher: Cacher[TermCandidatesCollectorConfi
   */
 case class CachingTCCConfig(dataConfig: DataConfig,
                             nlpConfig: NLPPreprocessorConfig,
-                            tccConfig: TССConfig,
+                            tccConfig: TCCConfig,
                             cacheDirName: String = "candidates/"
                            ) extends TermCandidatesCollectorConfig{
   val log = LogManager.getLogger(getClass)

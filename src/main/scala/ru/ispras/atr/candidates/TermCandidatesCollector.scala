@@ -85,7 +85,7 @@ trait TermCandidatesCollectorConfig {
   def build(): TermCandidatesCollector
 }
 
-case class TССConfig(nGramSizes: Seq[Int] = 1 to 4,
+case class TCCConfig(nGramSizes: Seq[Int] = 1 to 4,
                      minTermFreq: Int = 2,
                      termOccurrencesCollectorConfig: TermOccurrencesCollectorConfig = TermOccurrencesCollectorConfig())
     extends TermCandidatesCollectorConfig{
@@ -99,7 +99,7 @@ case class TССConfig(nGramSizes: Seq[Int] = 1 to 4,
 }
 
 object TermCandidatesCollectorConfig {
-  val subclasses = List(classOf[TССConfig], classOf[CachingTCCConfig], classOf[TermOccurrencesCollectorConfig]) ++
+  val subclasses = List(classOf[TCCConfig], classOf[CachingTCCConfig], classOf[TermOccurrencesCollectorConfig]) ++
     List(classOf[NamesOnlyTCCConfig])
     POSPatternCheckerConfig.subclasses ++
     StopWordsCheckerConfig.subclasses ++

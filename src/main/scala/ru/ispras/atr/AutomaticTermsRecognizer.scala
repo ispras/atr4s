@@ -4,7 +4,7 @@ import java.nio.charset.StandardCharsets
 import java.nio.file.{Files, Paths}
 
 import org.apache.log4j.LogManager
-import ru.ispras.atr.candidates.{TermCandidatesCollector, TermCandidatesCollectorConfig, TССConfig}
+import ru.ispras.atr.candidates.{TermCandidatesCollector, TermCandidatesCollectorConfig, TCCConfig}
 import ru.ispras.atr.datamodel.{DSDataset, TermCandidate}
 import ru.ispras.atr.features.occurrences.CValue
 import ru.ispras.atr.features.refcorpus.Weirdness
@@ -113,7 +113,7 @@ object AutomaticTermsRecognizer extends App {
     JsonSer.readFile[ATRConfig](atrConfFile)
   } else {
     log.info(s"Using default ATR config")
-    val defaultConf = new ATRConfig(EmoryNLPPreprocessorConfig(), TССConfig(), OneFeatureTCWeighterConfig(Weirdness()))
+    val defaultConf = new ATRConfig(EmoryNLPPreprocessorConfig(), TCCConfig(), OneFeatureTCWeighterConfig(Weirdness()))
     //use this line to write a config into a file
 //    JsonSer.writeFile[ATRConfig](defaultConf, "cvalue.conf")
     defaultConf
