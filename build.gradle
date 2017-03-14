@@ -3,6 +3,7 @@ plugins {
 }
 
 apply plugin: 'scala'
+apply plugin: 'java-library'
 apply plugin: 'idea'
 apply plugin: 'maven-publish'
 
@@ -31,9 +32,14 @@ task recognize(dependsOn: 'classes', type: JavaExec) {
     }
 }
 
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.4.1' //version required
+}
 
-def siteUrl = 'https://github.com/ispras/atr4s'      // Homepage URL of the library
-def gitUrl = 'https://github.com/ispras/atr4s.git'   // Git repository URL
+def artifactName = 'atr4s'
+def siteUrl = 'https://github.com/ispras/' + artifactName     // Homepage URL of the library
+def gitUrl = 'https://github.com/ispras/' + artifactName + '.git'   // Git repository URL
+def artifactVersion = '1.1'
 
 // custom tasks for creating source/javadoc jars
 task sourcesJar(type: Jar, dependsOn: classes) {
@@ -80,8 +86,8 @@ publishing {
             artifact javadocJar
 
             groupId 'ru.ispras'
-            artifactId 'atr4s'
-            version '1.0'
+            artifactId artifactName
+            version artifactVersion
 
             pom.withXml {
                 def root = asNode()
@@ -102,12 +108,12 @@ bintray {
     override = true
     pkg {
         repo = 'maven'
-        name = 'atr4s'
+        name = artifactName
         userOrg = 'ispras'
         licenses = ['Apache-2.0']
         vcsUrl = 'https://github.com/ispras/atr4s.git'
         version {
-            name = '1.0'
+            name = artifactVersion
             gpg {
                 sign = true //Determines whether to GPG sign the files. The default is false
             }
@@ -124,7 +130,7 @@ dependencies {
 
     // Apache OpenNLP preprocessing
     compile group: 'org.apache.opennlp', name: 'opennlp-tools', version: '1.6.0'
-
+0
     //for PU-ATR
     compile 'ru.ispras:pu4spark:0.1'
 
