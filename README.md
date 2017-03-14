@@ -112,6 +112,33 @@ See `ATRConfig` class, which is a Configuration/builder for a facade class `Auto
 
 See `AutomaticTermsRecognizer` object for example.
 
+### Program API (Java)
+
+Usage in Java does not differ significantly, so see the same classes for examples. 
+However, since Java does not support parameters with default values, 
+we provide helper static functions named `make()` 
+for most classes containing parameters with default values or parameters with Scala collections, 
+see example below.
+
+Also note that there is a special method returning weighted terms as Java Iterable, 
+so that you won't need to convert Scala collections to Java ones.
+
+```java
+class ATRExample {
+    public static void main(String[] args) {
+        String datasetDir = args[0];
+        int topCount = args[1];
+        ATRConfig atrConfig = new ATRConfig(EmoryNLPPreprocessorConfig.make(),
+                TCCConfig.make(),
+                new OneFeatureTCWeighterConfig(Weirdness.make()));
+        Iterable<WeightedTerm> terms = atrConfig.build().recognizeAsJavaIterable(datasetDir, topCount);
+        for (WeightedTerm termAndWeight: terms) {
+            System.out.println(termAndWeight);
+        }
+    }
+}
+```
+
 ## License
 
 Apache License Version 2.0.
