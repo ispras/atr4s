@@ -4,13 +4,15 @@ import java.nio.charset.StandardCharsets
 import java.nio.file.{Files, Paths}
 
 import org.apache.log4j.LogManager
-import ru.ispras.atr.candidates.{TermCandidatesCollector, TermCandidatesCollectorConfig, TCCConfig}
-import ru.ispras.atr.datamodel.{DSDataset, TermCandidate}
+import ru.ispras.atr.candidates.{TCCConfig, TermCandidatesCollector, TermCandidatesCollectorConfig}
+import ru.ispras.atr.datamodel.{DSDataset, TermCandidate, WeightedTerm}
 import ru.ispras.atr.features.occurrences.CValue
 import ru.ispras.atr.features.refcorpus.Weirdness
 import ru.ispras.atr.preprocess._
 import ru.ispras.atr.rank.{OneFeatureTCWeighterConfig, TermCandidatesWeighter, TermCandidatesWeighterConfig}
 import ru.ispras.atr.utils.JsonSer
+
+import scala.collection.JavaConversions
 
 /**
   * Facade for the whole ATR pipeline:
@@ -35,8 +37,8 @@ class AutomaticTermsRecognizer(nlpPreprocessor: NLPPreprocessor,
     candidatesCollector.collect(dataset)
   }
 
-  def weightAndSort(candidates: Seq[TermCandidate], dataset: DSDataset): Iterable[(String, Double)] = {
-    candidatesWeighter.weightAndSort(candidates, dataset)
+  def weightAndSort(candidates: Seq[TermCandidate], dataset: DSDataset): Iterable[WeightedTerm] = {
+    candidatesWeighter.weightAndSort(candidates, dataset).map(wt => WeightedTerm(wt._1, wt._2))
   }
 
   /**
@@ -50,11 +52,15 @@ class AutomaticTermsRecognizer(nlpPreprocessor: NLPPreprocessor,
     * @param topCount count of top term candidates to return
     * @return term candidates with their weights sorted by this weight
     */
-  def recognize(dirName: String, topCount: Int): Iterable[(String, Double)] = {
+  def recognize(dirName: String, topCount: Int): Iterable[WeightedTerm] = {
     val dataset = preprocess(dirName)
     val candidates = collectCandidates(dataset)
     val sortedTerms = weightAndSort(candidates, dataset)
     sortedTerms.take(topCount)
+  }
+
+  def recognizeAsJavaIterable(dirName: String, topCount: Int): java.lang.Iterable[WeightedTerm] = {
+    JavaConversions.asJavaIterable(recognize(dirName, topCount))
   }
 }
 
