@@ -36,6 +36,11 @@ case class CValue(smoothing: Double = 0.1) extends FeatureConfig {
   }
 }
 
+object CValue {
+  /** constructor for Java, since it doesn't support parameters with default values */
+  def make() = CValue()
+}
+
 class CValueFC(longerTermsCountMap: Map[Seq[String], Int],
                longerTermsSumFreqMap: Map[Seq[String], Int],
                smoothing: Double) extends FeatureComputer{

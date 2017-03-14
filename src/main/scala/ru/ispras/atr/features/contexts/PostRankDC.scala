@@ -21,3 +21,8 @@ case class PostRankDC(basic: Basic = Basic(),
     LinearCombinationFeature(Seq(basic, domainCoherence)).build(candidates, dataset)
   }
 }
+
+object PostRankDC {
+  /** constructor for Java, since it doesn't support parameters with default values */
+  def make() = PostRankDC()
+}

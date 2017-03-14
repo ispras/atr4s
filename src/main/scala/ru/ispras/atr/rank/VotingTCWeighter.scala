@@ -4,6 +4,7 @@ import org.apache.spark.sql.{Column, DataFrame}
 import org.apache.spark.sql.expressions.Window
 import org.apache.spark.sql.functions.{desc, rank, udf}
 import ru.ispras.atr.features.FeatureConfig
+import scala.collection.JavaConversions.asScalaBuffer
 
 /**
   * Average of inverted ranks of each feature values.
@@ -52,4 +53,9 @@ object VotingTCWeighter {
 
 case class VotingTCWeighterConfig(features: Seq[FeatureConfig]) extends TermCandidatesWeighterConfig {
   override def build(): TermCandidatesWeighter = new VotingTCWeighter(features)
+}
+
+object VotingTCWeighterConfig {
+  /** constructors for Java, since it can't work with scala seqs */
+  def make(features: java.util.List[FeatureConfig]) = VotingTCWeighterConfig(features)
 }

@@ -55,12 +55,15 @@ case class NoiseWordsCheckerConfig(validPoSTags: Set[String] = NoiseWordsChecker
                                    acceptableCharsRegex: String = "[^\\p{L}\\p{N}\\-]+" //letters and digits and dash
 //                                   acceptableCharsRegex: String = "[^\\p{L}]+" //only letters
                                   ) {
-  def build() = {
+  def build(): NoiseWordsChecker = {
     new NoiseWordsChecker(minWordLength, acceptableCharsRegex.r.unanchored, validPoSTags)
   }
 }
 
 object NoiseWordsCheckerConfig {
+  /** constructor for Java, since it doesn't support parameters with default values */
+  def make() = NoiseWordsCheckerConfig()
+
   val nouns: Set[String] = Set("NN", "NNS", "NNP", "NNPS")
   val verbs: Set[String] = Set("VB", "VBD","VBG", "VBN", "VBP", "VBZ")
   val adjectives: Set[String] = Set("JJ", "JJR", "JJS")

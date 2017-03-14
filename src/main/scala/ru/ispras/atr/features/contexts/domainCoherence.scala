@@ -82,6 +82,11 @@ case class DomainCoherence(seedCandidatesCount: Int = 200,
   }
 }
 
+object DomainCoherence {
+  /** constructor for Java, since it doesn't support parameters with default values */
+  def make() = DomainCoherence()
+}
+
 class DomainCoherenceFC(relatedWords2Freq: Map[String, Int],
                         corpusSize: Long,
                         contextSize: Int,
@@ -146,4 +151,9 @@ case class PMI(laplasSmoothing: Double = 1e-75,
     val positiveShiftedPMI = if (positive) Math.max(shiftedPMI, 0) else shiftedPMI
     positiveShiftedPMI / -Math.log(pSigmaTetta / corpusSize)
   }
+}
+
+object PMI {
+  /** constructor for Java, since it doesn't support parameters with default values */
+  def make() = PMI()
 }

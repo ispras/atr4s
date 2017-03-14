@@ -17,6 +17,11 @@ case class Relevance(referenceCorpusConfig: ReferenceCorpusConfig = ReferenceCor
   }
 }
 
+object Relevance {
+  /** constructor for Java, since it doesn't support parameters with default values */
+  def make() = Relevance()
+}
+
 class RelevanceFC(referenceCorpus: ReferenceCorpus,
                   targetCorpusSize: Long,
                   targetCorpusDocsCount: Int) extends FeatureComputer {

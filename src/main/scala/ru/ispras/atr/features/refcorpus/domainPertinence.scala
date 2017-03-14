@@ -16,6 +16,11 @@ case class DomainPertinence(referenceCorpusConfig: ReferenceCorpusConfig = Refer
   }
 }
 
+object DomainPertinence {
+  /** constructor for Java, since it doesn't support parameters with default values */
+  def make() = DomainPertinence()
+}
+
 class DomainPertinenceFC(referenceCorpus: ReferenceCorpus,
                          notFoundTermSmoothing: Double) extends FeatureComputer {
   override def compute(tc: TermCandidate): Double = {

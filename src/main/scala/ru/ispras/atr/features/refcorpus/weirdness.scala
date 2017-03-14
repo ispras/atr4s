@@ -18,6 +18,11 @@ case class Weirdness(referenceCorpusConfig: ReferenceCorpusConfig = ReferenceCor
   }
 }
 
+object Weirdness {
+  /** constructor for Java, since it doesn't support parameters with default values */
+  def make() = Weirdness()
+}
+
 class WeirdnessFC(referenceCorpus: ReferenceCorpus,
                   targetCorpusSize: Long) extends FeatureComputer {
 

@@ -62,3 +62,12 @@ case class CachingFeature(dataConfig: DataConfig,
       new Cacher[CachingFeature, Seq[Double], Seq[TermCandidate]](this, cacheDirName, recreateObject))
   }
 }
+
+object CachingFeature {
+  /** constructor for Java, since it doesn't support parameters with default values */
+  def make(dataConfig: DataConfig,
+           nlpConfig: NLPPreprocessorConfig,
+           tccConfig: TermCandidatesCollectorConfig,
+           innerFeature: FeatureConfig) =
+    CachingFeature(dataConfig, nlpConfig, tccConfig, innerFeature)
+}

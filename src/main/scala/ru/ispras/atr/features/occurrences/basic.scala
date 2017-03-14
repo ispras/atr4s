@@ -27,6 +27,11 @@ case class Basic(longerTermsCoeff: Double = 0.72,// from Thesis which was publis
   }
 }
 
+object Basic {
+  /** constructor for Java, since it doesn't support parameters with default values */
+  def make() = Basic()
+}
+
 class BasicFC(longerTermsCountMap: Map[Seq[String], Int],
               longerTermsCoeff: Double //alpha
              ) extends FeatureComputer {

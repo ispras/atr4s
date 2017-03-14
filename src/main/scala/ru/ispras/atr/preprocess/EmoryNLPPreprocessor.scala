@@ -32,3 +32,8 @@ case class EmoryNLPPreprocessorConfig(configPath: String = "/emorynlp_config_pos
     new EmoryNLPPreprocessor(decoder)
   }
 }
+
+object EmoryNLPPreprocessorConfig {
+  /** constructor for Java, since it doesn't support parameters with default values */
+  def make() = EmoryNLPPreprocessorConfig()
+}

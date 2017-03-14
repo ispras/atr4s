@@ -24,6 +24,11 @@ case class WikiPresenceFeature(fileName: String = "/info-measure.txt") extends F
   }
 }
 
+object WikiPresenceFeature {
+  /** constructor for Java, since it doesn't support parameters with default values */
+  def make() = WikiPresenceFeature()
+}
+
 class WikiPresenceFC(termInWiki: Set[String]) extends FeatureComputer {
 
   override def compute(tc: TermCandidate): Double = {

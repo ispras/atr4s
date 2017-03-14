@@ -28,6 +28,11 @@ case class LinkProbability(threshold: Double = 0.018,
   }
 }
 
+object LinkProbability {
+  /** constructor for Java, since it doesn't support parameters with default values */
+  def make() = LinkProbability()
+}
+
 class LinkProbabilityFC(threshold: Double,
                         term2LinkProb: Map[String, Double]) extends FeatureComputer {
 

@@ -35,6 +35,11 @@ case class NormWord2VecAdapterConfig(w2vmodelPath: String = "./data/w2vConcepts.
   }
 }
 
+object NormWord2VecAdapterConfig {
+  /** constructor for Java, since it doesn't support parameters with default values */
+  def make() = NormWord2VecAdapterConfig()
+}
+
 /**
   * Configuration/builder for Word2VecAdapter that tries to take already read model.
   * Should be used for evaluation of multiple features that all use the same word2vec model
@@ -43,6 +48,11 @@ case class NormWord2VecAdapterConfig(w2vmodelPath: String = "./data/w2vConcepts.
   */
 case class CachedWord2VecAdapterConfig(innerConfig: NormWord2VecAdapterConfig = NormWord2VecAdapterConfig()) extends Word2VecAdapterConfig {
   override def build() = Word2VecAdapterCache.get(innerConfig)
+}
+
+object CachedWord2VecAdapterConfig {
+  /** constructor for Java, since it doesn't support parameters with default values */
+  def make() = CachedWord2VecAdapterConfig()
 }
 
 /**

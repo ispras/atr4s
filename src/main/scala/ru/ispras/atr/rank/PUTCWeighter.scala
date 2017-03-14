@@ -7,6 +7,7 @@ import org.apache.spark.sql.functions.{desc, rank, udf}
 import org.apache.spark.sql.DataFrame
 import ru.ispras.atr.features.FeatureConfig
 import ru.ispras.pu4spark.{PositiveUnlabeledLearner, PositiveUnlabeledLearnerConfig, ProbabilisticClassifierConfig}
+import scala.collection.JavaConversions.asScalaBuffer
 
 /**
   * Extracts top 50-200 terms by single method (seed method);
@@ -70,6 +71,13 @@ case class PUTCWeighterConfig
 }
 
 object PUTCWeighterConfig {
+  /** constructors for Java, since it can't work with scala seqs */
+  def make(baseFeature: FeatureConfig,
+           puTopCount: Int,
+           predictFeatures: java.util.List[FeatureConfig],
+           puLearnerConfig: PositiveUnlabeledLearnerConfig) =
+    PUTCWeighterConfig(baseFeature, puTopCount, predictFeatures, puLearnerConfig)
+
   val subclasses = List(classOf[PUTCWeighterConfig]) ++
     PositiveUnlabeledLearnerConfig.subclasses ++
     ProbabilisticClassifierConfig.subclasses

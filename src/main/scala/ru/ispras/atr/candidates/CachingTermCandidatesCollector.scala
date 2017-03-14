@@ -50,6 +50,14 @@ case class CachingTCCConfig(dataConfig: DataConfig,
   }
 }
 
+object CachingTCCConfig {
+  /** constructor for Java, since it doesn't support parameters with default values */
+  def make(dataConfig: DataConfig, nlpConfig: NLPPreprocessorConfig, tccConfig: TCCConfig) =
+    CachingTCCConfig(dataConfig, nlpConfig, tccConfig)
+
+  val subclasses = List(classOf[CachingTCCConfig])
+}
+
 /**
   * Decorator for caching only names of term candidates -
   * should be used, when all features are already cached and we do not need term candidates occurrences
@@ -78,4 +86,11 @@ case class NamesOnlyTCCConfig(tccConfig: TermCandidatesCollectorConfig,
     new CachingTermCandidatesCollector(
       new Cacher[TermCandidatesCollectorConfig, Seq[TermCandidate], DSDataset](this, cacheDirName, recreateObject))
   }
+}
+
+object NamesOnlyTCCConfig {
+  /** constructor for Java, since it doesn't support parameters with default values */
+  def make(tccConfig: TermCandidatesCollectorConfig) = NamesOnlyTCCConfig(tccConfig)
+
+  val subclasses = List(classOf[NamesOnlyTCCConfig])
 }

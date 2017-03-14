@@ -10,6 +10,8 @@ import ru.ispras.modis.tm.documents.{Alphabet, SingleAttributeNumerator}
 import ru.ispras.modis.tm.matrix.Background
 import ru.ispras.modis.tm.utils.TopicHelper
 
+import scala.collection.immutable.IndexedSeq
+
 /**
   * Based on the idea that distribution of words over topics found by topic modeling is a less noisy signal
   * than simple frequency of occurrences.
@@ -65,7 +67,7 @@ case class NovelTopicModel(noiseWordsCheckerConfig: NoiseWordsCheckerConfig = No
     new NovelTopicModelFC(topicModel)
   }
 
-  def extractTypicalWord2Index(model: NTMTrainedModel, alphabet: Alphabet) = {
+  def extractTypicalWord2Index(model: NTMTrainedModel, alphabet: Alphabet): Map[String, Int] = {
     val mainTopicsWordIndices: Set[Int] = (0 until topicsCount)
       .flatMap(topicIndex => TopicHelper.getTopWords(model.getPhi, topicIndex, topWordsForTopic).toSet).toSet
     val backgroundWordIndices: Set[Int] = getTopBackgroundWords(topWordsForTopic, model.getBackground(), alphabet).toSet
@@ -76,8 +78,15 @@ case class NovelTopicModel(noiseWordsCheckerConfig: NoiseWordsCheckerConfig = No
   }
 
   //taken from old TopicHelper
-  def getTopBackgroundWords(n: Int, background: Background, alphabet: Alphabet) =
+  def getTopBackgroundWords(n: Int, background: Background, alphabet: Alphabet): IndexedSeq[Int] =
     0.until(background.numberOfWords).map(ind =>(ind, background.probability(ind))).sortBy(-_._2).take(n).map(_._1)
+}
+
+object NovelTopicModel {
+  /** constructor for Java, since it doesn't support parameters with default values */
+  def make() = NovelTopicModel()
+  def make(noiseWordsCheckerConfig: NoiseWordsCheckerConfig, minWordsInDocCount: Int) =
+    NovelTopicModel(noiseWordsCheckerConfig, minWordsInDocCount)
 }
 
 case class TypicalWordsTopicModel(model: NTMTrainedModel,

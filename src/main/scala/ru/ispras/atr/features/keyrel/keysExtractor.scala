@@ -113,6 +113,15 @@ case class DocKeysExtractorConfig(termOccCollectorConfig: TermOccurrencesCollect
   }
 }
 
+object DocKeysExtractorConfig {
+  /** constructor for Java, since it doesn't support parameters with default values */
+  def make() = DocKeysExtractorConfig()
+
+  val subclasses = List(classOf[DocKeysExtractorConfig],
+    classOf[RakeKeyPhraseWeighterConfig],
+    classOf[FPLKeyPhraseWeighterConfig])
+}
+
 //=== weighters ==//
 
 /**
@@ -160,8 +169,18 @@ case class RakeKeyPhraseWeighterConfig() extends KeyPhraseWeighterConfig {
   }
 }
 
+object RakeKeyPhraseWeighterConfig {
+  /** constructor for Java, since it doesn't support parameters with default values */
+  def make() = RakeKeyPhraseWeighterConfig()
+}
+
 case class FPLKeyPhraseWeighterConfig() extends KeyPhraseWeighterConfig {
   override def build(allCandidates: IndexedSeq[TermOccurrence], cand2freq: Map[Seq[String], Int]): KeyPhraseWeighter = {
     new FPLKeyPhraseWeighter(cand2freq)
   }
+}
+
+object FPLKeyPhraseWeighterConfig {
+  /** constructor for Java, since it doesn't support parameters with default values */
+  def make() = FPLKeyPhraseWeighterConfig()
 }

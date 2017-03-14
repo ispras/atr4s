@@ -32,5 +32,8 @@ case class StopWordsCheckerConfig(fileName: String = "/stopWords.txt") {
 }
 
 object StopWordsCheckerConfig {
+  /** constructor for Java, since it doesn't support parameters with default values */
+  def make() = StopWordsCheckerConfig()
+
   val subclasses = List(classOf[StopWordsCheckerConfig])
 }

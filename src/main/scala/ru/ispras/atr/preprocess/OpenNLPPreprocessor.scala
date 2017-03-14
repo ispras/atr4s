@@ -50,3 +50,8 @@ case class OpenNLPPreprocessorConfig(sentModPath: String = "/en-sent.bin",
     new OpenNLPPreprocessor(sentdet,  tokenizer, tagger, lemmatizer)
   }
 }
+
+object OpenNLPPreprocessorConfig {
+  /** constructor for Java, since it doesn't support parameters with default values */
+  def make() = OpenNLPPreprocessorConfig()
+}

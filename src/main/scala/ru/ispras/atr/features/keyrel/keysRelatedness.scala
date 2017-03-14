@@ -35,6 +35,11 @@ case class KeyConceptRelatedness(docKeysExtractorConfig: DocKeysExtractorConfig 
   }
 }
 
+object KeyConceptRelatedness {
+  /** constructor for Java, since it doesn't support parameters with default values */
+  def make() = KeyConceptRelatedness()
+}
+
 /**
   * The same as [[ru.ispras.atr.features.keyrel.KeyConceptRelatedness]], but instead of key concepts,
   * i.e. words/collocations that correspond to Wikipedia article, ordinary words are considered.
@@ -115,6 +120,11 @@ case class KeyConceptRelatednessFallback(docKeysExtractorConfig: DocKeysExtracto
   }
 }
 
+object KeyConceptRelatednessFallback {
+  /** constructor for Java, since it doesn't support parameters with default values */
+  def make() = KeyConceptRelatednessFallback()
+}
+
 
 abstract class KeysRelatednessFC(keysVectors: Seq[Seq[Array[Float]]],
                                  nearestKeysCount: Int) extends FeatureComputer{
@@ -166,11 +176,12 @@ class KeyConceptRelatednessWithFallbackFC(keysVectors: Seq[Seq[Array[Float]]],
 }
 
 object KeyPhraseRelatedness {
+  /** constructor for Java, since it doesn't support parameters with default values */
+  def make() = KeyPhraseRelatedness()
+
   val subclasses = List(
     classOf[KeyPhraseRelatedness],
     classOf[KeyConceptRelatedness],
-    classOf[KeyConceptRelatednessFallback],
-    classOf[DocKeysExtractorConfig],
-    classOf[RakeKeyPhraseWeighterConfig], classOf[FPLKeyPhraseWeighterConfig]
-  )
+    classOf[KeyConceptRelatednessFallback]) ++
+    DocKeysExtractorConfig.subclasses
 }

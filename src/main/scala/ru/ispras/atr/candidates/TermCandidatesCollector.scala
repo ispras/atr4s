@@ -2,6 +2,7 @@ package ru.ispras.atr.candidates
 
 import org.apache.logging.log4j.LogManager
 import ru.ispras.atr.datamodel.{DSDataset, DSDocument, TermCandidate, TermOccurrence}
+import scala.collection.JavaConversions.asScalaBuffer
 
 /**
   * Extracts consecutive word n-grams of specified orders as term occurrences,
@@ -31,7 +32,7 @@ class TermCandidatesCollector(nGramSizes: Seq[Int],
     log.info(s"$nGramSize-grams occurrences: ${allTermOccurrences.size}")
     //create term candidate by grouping term occurrences by canonical representation
     val allTermCandidates = allTermOccurrences.groupBy(TermOccurrence.canonicalRepresentation).toSeq
-      .map(tc => new TermCandidate(tc._2.toSeq.seq))
+      .map(tc => TermCandidate(tc._2.toSeq.seq))
     log.info(s"$nGramSize-grams candidates: ${allTermCandidates.size}")
     val frequentTermCandidates = allTermCandidates.filter(_.occurrences.size >= minTermFreq)
     log.info(s"$nGramSize-grams (freq >=$minTermFreq): ${frequentTermCandidates.size}")
@@ -78,6 +79,13 @@ case class TermOccurrencesCollectorConfig(posPatternCheckerConfig: POSPatternChe
   }
 }
 
+object TermOccurrencesCollectorConfig {
+  /** constructor for Java, since it doesn't support parameters with default values */
+  def make() = TermOccurrencesCollectorConfig()
+
+  val subclasses = List(classOf[TermOccurrencesCollectorConfig])
+}
+
 /**
   * Configuration/builder for TermCandidatesCollector
   */
@@ -88,8 +96,8 @@ trait TermCandidatesCollectorConfig {
 case class TCCConfig(nGramSizes: Seq[Int] = 1 to 4,
                      minTermFreq: Int = 2,
                      termOccurrencesCollectorConfig: TermOccurrencesCollectorConfig = TermOccurrencesCollectorConfig())
-    extends TermCandidatesCollectorConfig{
-  override def build() = {
+    extends TermCandidatesCollectorConfig {
+  override def build(): TermCandidatesCollector = {
     new TermCandidatesCollector(
       nGramSizes,
       minTermFreq,
@@ -98,9 +106,19 @@ case class TCCConfig(nGramSizes: Seq[Int] = 1 to 4,
   }
 }
 
+object TCCConfig {
+  /** constructors for Java, since it doesn't support parameters with default values and can't work with scala seqs */
+  def make() = TCCConfig()
+  def make(nGramSizes: java.util.List[Int], minTermFreq: Int) = TCCConfig(nGramSizes, minTermFreq)
+  def make(nGramSizes: java.util.List[Int], minTermFreq: Int, termOccurrencesCollectorConfig: TermOccurrencesCollectorConfig) =
+    TCCConfig(nGramSizes, minTermFreq, termOccurrencesCollectorConfig)
+}
+
 object TermCandidatesCollectorConfig {
-  val subclasses = List(classOf[TCCConfig], classOf[CachingTCCConfig], classOf[TermOccurrencesCollectorConfig]) ++
-    List(classOf[NamesOnlyTCCConfig])
+  val subclasses = List(classOf[TCCConfig]) ++
+    CachingTCCConfig.subclasses ++
+    TermOccurrencesCollectorConfig.subclasses ++
+    NamesOnlyTCCConfig.subclasses ++
     POSPatternCheckerConfig.subclasses ++
     StopWordsCheckerConfig.subclasses ++
     NoiseWordsCheckerConfig.subclasses

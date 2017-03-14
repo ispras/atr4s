@@ -37,11 +37,15 @@ trait POSPatternCheckerConfig {
   */
 case class RegexPOSPatternCheckerConfig(
 //                                      patternStr: String = "(NN(S)?_|JJ_)*(NN(S)?)"
-                                        patternStr: String = "(NN(S)?_|JJ_|NNP_|NN(S?)_IN_)*(NN(S)?)"
-                                       ) extends POSPatternCheckerConfig {
+                                        patternStr: String = "(NN(S)?_|JJ_|NNP_|NN(S?)_IN_)*(NN(S)?)") extends POSPatternCheckerConfig {
   override def build(): POSPatternChecker = {
     new RegexPOSPatternChecker(patternStr.r)
   }
+}
+
+object RegexPOSPatternCheckerConfig {
+  /** constructor for Java, since it doesn't support parameters with default values */
+  def make() = RegexPOSPatternCheckerConfig()
 }
 
 object POSPatternCheckerConfig {

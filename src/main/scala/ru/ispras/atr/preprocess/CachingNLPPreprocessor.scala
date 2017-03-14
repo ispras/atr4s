@@ -42,6 +42,12 @@ case class CachingNLPPreprocessorConfig(dataConfig: DataConfig,
   }
 }
 
+object CachingNLPPreprocessorConfig {
+  /** constructor for Java, since it doesn't support parameters with default values */
+  def make(dataConfig: DataConfig, preprocessorConfig: NLPPreprocessorConfig) =
+    CachingNLPPreprocessorConfig(dataConfig, preprocessorConfig)
+}
+
 /**
   * Decorator for doing nothing -
   * should be used, when all features are already cached and we do not need term candidates occurrences
@@ -60,4 +66,9 @@ class DummyNLPPreprocessor(innerPreprocessor: NLPPreprocessor) extends NLPPrepro
   */
 case class DummyNLPPreprocessorConfig(nlpConfig: NLPPreprocessorConfig) extends NLPPreprocessorConfig {
   override def build(): NLPPreprocessor = new DummyNLPPreprocessor(nlpConfig.build())
+}
+
+object DummyNLPPreprocessorConfig {
+  /** constructor for Java, since it doesn't support parameters with default values */
+  def make(nlpConfig: NLPPreprocessorConfig) = DummyNLPPreprocessorConfig(nlpConfig)
 }

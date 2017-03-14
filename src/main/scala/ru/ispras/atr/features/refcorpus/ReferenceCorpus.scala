@@ -36,3 +36,8 @@ case class ReferenceCorpusConfig(fileName: String = "./data/COHA_term_occurrence
     new ReferenceCorpus(term2RefFreq, corpusSize, epsilon)
   }
 }
+
+object ReferenceCorpusConfig {
+  /** constructor for Java, since it doesn't support parameters with default values */
+  def make() = ReferenceCorpusConfig()
+}
