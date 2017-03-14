@@ -8,6 +8,7 @@ import org.json4s.reflect.TypeInfo
 import org.json4s.{MappingException, _}
 import ru.ispras.atr.ATRConfig
 import ru.ispras.atr.datamodel.DataConfig
+import scala.language.implicitConversions
 
 /**
   * TODO

@@ -121,6 +121,10 @@ bintray {
     }
 }
 
+compileScala {
+    scalaCompileOptions.additionalParameters = ["-feature"]
+}
+
 dependencies {
     compile 'org.scala-lang:scala-library:2.11.7'
 
