@@ -101,8 +101,9 @@ publishing {
 }
 
 bintray {
-    user = bintrayUser
-    key = bintrayApiKey
+    user = project.hasProperty('bintrayUser') ? bintrayUser : ''
+    key = project.hasProperty('bintrayApiKey') ? bintrayApiKey : ''
+    
     publications = ['MyPublication']
     publish = true //If version should be auto published after an upload
     override = true
