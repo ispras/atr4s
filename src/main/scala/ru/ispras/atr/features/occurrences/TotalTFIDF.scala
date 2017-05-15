@@ -9,7 +9,7 @@ import ru.ispras.atr.features.{FeatureComputer, FeatureConfig}
   *   JATE 2.0: Java Automatic Term Extraction with Apache Solr.
   *   The LREC 2016 Proceedings.
   */
-class TotalTFIDF extends FeatureConfig {
+case class TotalTFIDF() extends FeatureConfig {
   override def build(candidates: Seq[TermCandidate], dataset: DSDataset): FeatureComputer = {
     new TotalTFIDFFC(dataset.sizeInDocs)
   }
