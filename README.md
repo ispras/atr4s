@@ -56,9 +56,11 @@ or specify path in the corresponding configuration/builder class
 (e.g. `Word2VecAdapterConfig` of `KeyConceptRelatedness`).
 
 Namely,
-- for **LinkProbability** download [COHA_term_occurrences.txt](https://at.ispras.ru/owncloud/index.php/s/0eUMJywO3AhXDHb);
-- for **Relevance** download [info_measure.txt](https://at.ispras.ru/owncloud/index.php/s/MzVm6GVOQ4eTJyR);
+- for **LinkProbability** download [info_measure.txt](https://at.ispras.ru/owncloud/index.php/s/MzVm6GVOQ4eTJyR); 
+- for **Relevance** download [COHA_term_occurrences.txt](https://at.ispras.ru/owncloud/index.php/s/0eUMJywO3AhXDHb);
 - for **KeyConceptRelatedness** download [w2vConcepts.model](https://at.ispras.ru/owncloud/index.php/s/SWP1YiISQPQCqTj).
+
+Datasets used in the experiments and examples can be downloaded [here](https://at.ispras.ru/owncloud/index.php/s/kXqCBSryRswThTy).
 
 ## Linking
 
@@ -100,11 +102,12 @@ Build library with gradle:
 ### Command line example
 
 ```shell
-./gradlew recognize -Pdataset=acl2 -PtopCount=10 -Pconfig=Relevance.conf -Poutput=relterms.txt
+./gradlew recognize -Pdataset=acl2 -PtopCount=10 -Pconfig=CValue.conf -Poutput=cvalueterms.txt
 ```
 
-Here we recognize top 10 terms from text files stored in `acl2` directory by Relevance measure
-(stored in `Relevance.conf` file) and writes recognized terms with weights in `relterms.txt`.
+Here we recognize top 10 terms from text files stored in `acl2` directory 
+(note again, it should be subdirectory of `WORKING_DIRECTORY`) by CValue measure
+(stored in `CValue.conf` file) and writes recognized terms with weights in `cvalueterms.txt`.
 
 ### Program API
 

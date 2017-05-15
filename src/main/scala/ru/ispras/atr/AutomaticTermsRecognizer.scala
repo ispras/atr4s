@@ -7,7 +7,6 @@ import org.apache.log4j.LogManager
 import ru.ispras.atr.candidates.{TCCConfig, TermCandidatesCollector, TermCandidatesCollectorConfig}
 import ru.ispras.atr.datamodel.{DSDataset, TermCandidate, WeightedTerm}
 import ru.ispras.atr.features.occurrences.CValue
-import ru.ispras.atr.features.refcorpus.Weirdness
 import ru.ispras.atr.preprocess._
 import ru.ispras.atr.rank.{OneFeatureTCWeighterConfig, TermCandidatesWeighter, TermCandidatesWeighterConfig}
 import ru.ispras.atr.utils.JsonSer
@@ -119,9 +118,9 @@ object AutomaticTermsRecognizer extends App {
     JsonSer.readFile[ATRConfig](atrConfFile)
   } else {
     log.info(s"Using default ATR config")
-    val defaultConf = new ATRConfig(EmoryNLPPreprocessorConfig(), TCCConfig(), OneFeatureTCWeighterConfig(Weirdness()))
+    val defaultConf = new ATRConfig(EmoryNLPPreprocessorConfig(), TCCConfig(), OneFeatureTCWeighterConfig(CValue()))
     //use this line to write a config into a file
-//    JsonSer.writeFile[ATRConfig](defaultConf, "cvalue.conf")
+//    JsonSer.writeFile[ATRConfig](defaultConf, "CValue.conf")
     defaultConf
   }
 
