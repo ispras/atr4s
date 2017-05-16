@@ -51,7 +51,7 @@ which is moved to a separate module licensed by GPL, due to GPL licensing of Sta
 ### Data
 
 In order to use some algorithms you need to download auxiliary files and place them into
-`WORKING_DIRECTORY/data` directory (note that working directory can be specified in `gradle.properties`)
+`WORKING_DIRECTORY/data` directory (note that working directory can be specified in `gradle.properties` - by default, this is `experiments`)
 or specify path in the corresponding configuration/builder class
 (e.g. `Word2VecAdapterConfig` of `KeyConceptRelatedness`).
 
