@@ -2,10 +2,10 @@ package ru.ispras.atr.preprocess
 
 import java.io.File
 
-import org.apache.logging.log4j.LogManager
+import org.apache.logging.log4j.{LogManager, Logger}
 import ru.ispras.atr.datamodel.{DSDataset, DSDocument, Word}
 
-import scala.io.Source
+import scala.io.{Codec, Source}
 
 /**
   * Preprocessed input documents: firstly, reads them from the specified directory, then
@@ -14,7 +14,7 @@ import scala.io.Source
   * and finds part of speech tags and lemmas for obtained tokens.
   */
 trait NLPPreprocessor {
-  val log = LogManager.getLogger(getClass)
+  val log: Logger = LogManager.getLogger(getClass)
 
   def preprocess(dirName: String) : DSDataset = {
     log.debug(s"Reading files from $dirName")
@@ -29,13 +29,16 @@ trait NLPPreprocessor {
     }
     //read all files in memory, since we anyway have to store all docs for feature computation
     val namedTexts: Array[(String, String)] = files.map(f => {
-      val source = Source.fromFile(f)//, "ISO-8859-1") //hack for news20 texts
-      val text = try source.getLines.mkString("\n") finally source.close()
-//      //Hack for testing only annotations of krapivin
-////      val s = text.indexOf("--A")
-//      val e = text.indexOf("--B")
-//      val restext = text.substring(0,e)
-//      (f.getName.replace(".txt", ""), restext)
+      val source = Source.fromFile(f)(codec())
+      val text = try
+        source.getLines.mkString("\n")
+        catch {
+          case mie: java.nio.charset.MalformedInputException =>
+            log.error(s"Input text files should be encoded in ${codec()}; file with wrong encoding: ${f.getName}")
+            throw mie
+          case e: Throwable => throw e
+        }
+      finally source.close()
       (f.getName.replace(".txt", ""), text)
     })
     log.debug(s"Preprocessing ${namedTexts.length} texts")
@@ -51,6 +54,8 @@ trait NLPPreprocessor {
   }
 
   def extractWords(text: String): Seq[Word]
+
+  def codec(): Codec = Codec.UTF8
 }
 
 /**

@@ -2,7 +2,9 @@ package ru.ispras.atr.preprocess
 
 import edu.emory.mathcs.nlp.decode.NLPDecoder
 import ru.ispras.atr.datamodel.Word
+
 import scala.collection.JavaConversions.asScalaBuffer
+import scala.io.Codec
 
 /**
   * Note that preliminary experiments show drop of 1-5\% in average precision in case of switching to Emory nlp4j,
@@ -15,7 +17,8 @@ import scala.collection.JavaConversions.asScalaBuffer
   *
   * @param decoder should be read from xml-file with config, see [[ru.ispras.atr.preprocess.EmoryNLPPreprocessorConfig]]
   */
-class EmoryNLPPreprocessor(decoder: NLPDecoder) extends NLPPreprocessor {
+class EmoryNLPPreprocessor(decoder: NLPDecoder,
+                           defaultCodec: Codec) extends NLPPreprocessor {
 
   override def extractWords(text: String): Seq[Word] = {
     val sents = decoder.decodeDocument(text)
@@ -23,13 +26,16 @@ class EmoryNLPPreprocessor(decoder: NLPDecoder) extends NLPPreprocessor {
     sents.flatMap(_.tail.map(node => new Word(node.getLemma, node.getPartOfSpeechTag))
     )
   }
+
+  override def codec(): Codec = defaultCodec
 }
 
-case class EmoryNLPPreprocessorConfig(configPath: String = "/emorynlp_config_pos.xml") extends NLPPreprocessorConfig {
+case class EmoryNLPPreprocessorConfig(encoding: String = "UTF-8",
+                                      configPath: String = "/emorynlp_config_pos.xml") extends NLPPreprocessorConfig {
   override def build(): NLPPreprocessor = {
     val stream = getClass.getResourceAsStream(configPath)
     val decoder = new NLPDecoder(stream)
-    new EmoryNLPPreprocessor(decoder)
+    new EmoryNLPPreprocessor(decoder, Codec(encoding))
   }
 }
 

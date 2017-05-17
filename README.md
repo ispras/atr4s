@@ -109,7 +109,8 @@ Here we recognize top 10 terms from text files stored in `acl2` directory
 (should be subdirectory of `WORKING_DIRECTORY`) by CValue measure
 (stored in `CValue.conf` file) and writes recognized terms with weights in `cvalueterms.txt`.
 
-Note that input text files should be encoded in UTF-8. (There are many [tools](http://stackoverflow.com/questions/64860/best-way-to-convert-text-files-between-character-sets) for converting text files).
+Note that if the encoding of input text files differs from UTF-8, then you should specify the correct encoding in the config of `NLPPreprocessor`
+(or convert input files, there are many [tools](http://stackoverflow.com/questions/64860/best-way-to-convert-text-files-between-character-sets) for that).
 
 ### Program API
 
