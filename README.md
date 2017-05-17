@@ -106,8 +106,10 @@ Build library with gradle:
 ```
 
 Here we recognize top 10 terms from text files stored in `acl2` directory 
-(note again, it should be subdirectory of `WORKING_DIRECTORY`) by CValue measure
+(should be subdirectory of `WORKING_DIRECTORY`) by CValue measure
 (stored in `CValue.conf` file) and writes recognized terms with weights in `cvalueterms.txt`.
+
+Note that input text files should be encoded in UTF-8. (There are many [tools](http://stackoverflow.com/questions/64860/best-way-to-convert-text-files-between-character-sets) for converting text files).
 
 ### Program API
 
