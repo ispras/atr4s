@@ -7,7 +7,7 @@ import ru.ispras.atr.features.keyrel.{KeyConceptRelatedness, KeyConceptRelatedne
 /**
   * Simply ranks by the specified feature.
   */
-class OneFeatureTCWeighter(feature: FeatureConfig) extends TermCandidatesWeighter {
+class OneFeatureTCWeighter(feature: FeatureConfig, docsToShow: Int) extends TermCandidatesWeighter {
 
   def weightAndSort(candidates: Seq[TermCandidate], dataset: DSDataset): Iterable[(String, Double)] = {
     log.info(s"Initializing feature ${feature.id}...")
@@ -17,11 +17,11 @@ class OneFeatureTCWeighter(feature: FeatureConfig) extends TermCandidatesWeighte
     //hack for computing number of candidates occurring in Wikipedia as concepts
 //    val keyRel = featureComputer.asInstanceOf[KeyConceptRelatednessFC]
 //    log.debug(s"hits: ${keyRel.word2VecAdapter.hits}; misses: ${keyRel.word2VecAdapter.misses}")
-    val res: Seq[(String, Double)] = candidates.map(_.canonicalRepr).zip(featureVals).sortBy(-_._2)
+    val res: Seq[(String, Double)] = candidates.map(_.verboseRepr(docsToShow)).zip(featureVals).sortBy(-_._2)
     res
   }
 }
 
-case class OneFeatureTCWeighterConfig(feature: FeatureConfig) extends TermCandidatesWeighterConfig {
-  override def build(): TermCandidatesWeighter = new OneFeatureTCWeighter(feature)
+case class OneFeatureTCWeighterConfig(feature: FeatureConfig, docsToShow: Int = 3) extends TermCandidatesWeighterConfig {
+  override def build(): TermCandidatesWeighter = new OneFeatureTCWeighter(feature, docsToShow)
 }

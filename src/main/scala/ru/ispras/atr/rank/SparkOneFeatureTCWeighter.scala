@@ -8,7 +8,7 @@ import ru.ispras.atr.features.FeatureConfig
   *
   * Note that it uses Spark, so initialization may take about 30 seconds.
   */
-class SparkOneFeatureTCWeighter(feature: FeatureConfig) extends SparkTermCandidatesWeighter(){
+class SparkOneFeatureTCWeighter(feature: FeatureConfig, docsToShow: Int) extends SparkTermCandidatesWeighter(docsToShow){
 
   override def id: String = feature.id
 
@@ -18,6 +18,7 @@ class SparkOneFeatureTCWeighter(feature: FeatureConfig) extends SparkTermCandida
   override def weight(df: DataFrame): DataFrame = df
 }
 
-case class SparkOneFeatureTCWeighterConfig(feature: FeatureConfig) extends TermCandidatesWeighterConfig {
-  override def build(): TermCandidatesWeighter = new SparkOneFeatureTCWeighter(feature)
+case class SparkOneFeatureTCWeighterConfig(feature: FeatureConfig,
+                                           docsToShow: Int = 3) extends TermCandidatesWeighterConfig {
+  override def build(): TermCandidatesWeighter = new SparkOneFeatureTCWeighter(feature, docsToShow)
 }

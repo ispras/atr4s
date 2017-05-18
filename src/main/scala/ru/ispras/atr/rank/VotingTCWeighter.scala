@@ -15,7 +15,7 @@ import scala.collection.JavaConversions.asScalaBuffer
   *   Zhang, Z., Iria, J., Brewster, C., & Ciravegna, F. (2008, May).
   *   A comparative evaluation of term recognition algorithms. In LREC.
   */
-class VotingTCWeighter(features: Seq[FeatureConfig]) extends SparkTermCandidatesWeighter() {
+class VotingTCWeighter(features: Seq[FeatureConfig], docsToShow: Int) extends SparkTermCandidatesWeighter(docsToShow) {
 
   override def allFeatures: Seq[FeatureConfig] = features
   /**
@@ -51,8 +51,8 @@ object VotingTCWeighter {
   val inverseUDF = udf(inverse(_:Double))
 }
 
-case class VotingTCWeighterConfig(features: Seq[FeatureConfig]) extends TermCandidatesWeighterConfig {
-  override def build(): TermCandidatesWeighter = new VotingTCWeighter(features)
+case class VotingTCWeighterConfig(features: Seq[FeatureConfig], docsToShow: Int = 3) extends TermCandidatesWeighterConfig {
+  override def build(): TermCandidatesWeighter = new VotingTCWeighter(features, docsToShow)
 }
 
 object VotingTCWeighterConfig {

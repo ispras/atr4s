@@ -27,11 +27,13 @@ import scala.collection.JavaConversions.asScalaBuffer
   * @param seedsCount      count of positives to be extracted
   * @param predictFeatures features for PU learning algorithm
   * @param puLearner       configuration for PU learning algorithm
+  * @param docsToShow      number of documents for term occurrences of found terms to show in the output file
   */
 class PUTCWeighter(baseFeature: FeatureConfig,
                    seedsCount: Int,
                    predictFeatures: Seq[FeatureConfig],
-                   puLearner: PositiveUnlabeledLearner) extends SparkTermCandidatesWeighter() {
+                   puLearner: PositiveUnlabeledLearner,
+                   docsToShow: Int) extends SparkTermCandidatesWeighter(docsToShow) {
 
   val termProbName = "category"
   val srcFeaturesName = "srcFeatures"
@@ -64,9 +66,11 @@ case class PUTCWeighterConfig
     (baseFeature: FeatureConfig,
      puTopCount: Int = 100,
      predictFeatures: Seq[FeatureConfig],
-     puLearnerConfig: PositiveUnlabeledLearnerConfig) extends TermCandidatesWeighterConfig {
+     puLearnerConfig: PositiveUnlabeledLearnerConfig,
+     docsToShow: Int = 3
+    ) extends TermCandidatesWeighterConfig {
   override def build(): PUTCWeighter = {
-     new PUTCWeighter(baseFeature, puTopCount, predictFeatures, puLearnerConfig.build())
+     new PUTCWeighter(baseFeature, puTopCount, predictFeatures, puLearnerConfig.build(), docsToShow)
   }
 }
 

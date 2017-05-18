@@ -13,7 +13,7 @@ import ru.ispras.atr.features.FeatureConfig
   * Creates Spark Dataframe for term candidates and their scores (feature values),
   * then appends new column containing estimation of term probability for each candidate
   */
-abstract class SparkTermCandidatesWeighter() extends TermCandidatesWeighter {
+abstract class SparkTermCandidatesWeighter(docsToShow:Int) extends TermCandidatesWeighter {
   val termDFName = "Term"
 
   def allFeatures: Seq[FeatureConfig]
@@ -41,7 +41,7 @@ abstract class SparkTermCandidatesWeighter() extends TermCandidatesWeighter {
 
   def weightAndSort(candidates: Seq[TermCandidate], dataset: DSDataset): Iterable[(String, Double)] = {
     val featureValues = convert2FeatureSpace(candidates, dataset)
-    val initDF = convertToDF(candidates.map(_.canonicalRepr), allFeatures.map(_.id), featureValues)
+    val initDF = convertToDF(candidates.map(_.verboseRepr(docsToShow)), allFeatures.map(_.id), featureValues)
     val weightedDF = weight(initDF)
     val termNamesDF = weightedDF.select(termDFName,id).sort(desc(id))
     val weightColId: String = id //for serialization
