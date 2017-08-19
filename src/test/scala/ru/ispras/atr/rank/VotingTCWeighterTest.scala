@@ -13,7 +13,7 @@ class VotingTCWeighterTest extends FunSuite with BeforeAndAfterEach {
 
   test("testWeight") {
     df.show()
-    val votingDF = new VotingTCWeighter(null).weight(df)
+    val votingDF = new VotingTCWeighter(null, 10).weight(df)
     votingDF.show()
 
     val terms = votingDF.rdd.map(r => (r(0).asInstanceOf[String],r(1).asInstanceOf[Double])).collect()

@@ -45,7 +45,7 @@ preliminary experiments showed that its quality is not better than Emory nlp4j, 
 if you are going to use OpenNLP, download models from Apache OpenNLP and place them into `src/main/resources`)
 
 ([Stanford CoreNLP](http://stanfordnlp.github.io/CoreNLP/) is also supported by
-[this helper](https://at.ispras.ru/owncloud/index.php/s/Or7je8dxk5xIotL),
+[this helper](https://github.com/ispras/atr4s/releases/download/v1.2/StanfordNLPPreprocessor.scala),
 which is moved to a separate module licensed by GPL, due to GPL licensing of Stanford CoreNLP).
 
 ### Data
@@ -56,11 +56,11 @@ or specify path in the corresponding configuration/builder class
 (e.g. `Word2VecAdapterConfig` of `KeyConceptRelatedness`).
 
 Namely,
-- for **LinkProbability** download [info_measure.txt](https://at.ispras.ru/owncloud/index.php/s/MzVm6GVOQ4eTJyR); 
-- for **Relevance** download [COHA_term_occurrences.txt](https://at.ispras.ru/owncloud/index.php/s/0eUMJywO3AhXDHb);
-- for **KeyConceptRelatedness** download [w2vConcepts.model](https://at.ispras.ru/owncloud/index.php/s/SWP1YiISQPQCqTj).
+- for **LinkProbability** download [info_measure.txt](https://github.com/ispras/atr4s/releases/download/v1.2/info-measure.txt); 
+- for **Relevance** download [COHA_term_occurrences.txt](https://github.com/ispras/atr4s/releases/download/v1.2/COHA_term_occurrences.txt);
+- for **KeyConceptRelatedness** download [w2vConcepts.model](https://github.com/ispras/atr4s/releases/download/v1.2/w2vConcepts.model).
 
-Datasets used in the experiments and examples can be downloaded [here](https://at.ispras.ru/owncloud/index.php/s/kXqCBSryRswThTy).
+Datasets used in the experiments can be downloaded from [Release page](https://github.com/ispras/atr4s/releases/tag/v1.2).
 
 ## Linking
 
@@ -70,7 +70,7 @@ Add the following lines depending on your build system.
 ### Gradle
 
 ```gradle
-compile 'ru.ispras:atr4s:1.1'
+compile 'ru.ispras:atr4s:1.2'
 ```
 
 ### Maven
@@ -79,14 +79,14 @@ compile 'ru.ispras:atr4s:1.1'
 <dependency>
     <groupId>ru.ispras</groupId>
     <artifactId>atr4s</artifactId>
-    <version>1.1</version>
+    <version>1.2</version>
 </dependency>
 ```
 
 ### SBT
 
 ```
-libraryDependencies += "ru.ispras" % "atr4s" % "1.1"
+libraryDependencies += "ru.ispras" % "atr4s" % "1.2"
 ```
 
 ## Building from Sources

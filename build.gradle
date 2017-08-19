@@ -39,7 +39,7 @@ task wrapper(type: Wrapper) {
 def artifactName = 'atr4s'
 def siteUrl = 'https://github.com/ispras/' + artifactName     // Homepage URL of the library
 def gitUrl = 'https://github.com/ispras/' + artifactName + '.git'   // Git repository URL
-def artifactVersion = '1.1'
+def artifactVersion = '1.2'
 
 // custom tasks for creating source/javadoc jars
 task sourcesJar(type: Jar, dependsOn: classes) {
