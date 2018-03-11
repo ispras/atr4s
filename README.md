@@ -70,7 +70,7 @@ Add the following lines depending on your build system.
 ### Gradle
 
 ```gradle
-compile 'ru.ispras:atr4s:1.2'
+compile 'ru.ispras:atr4s:1.2.1'
 ```
 
 ### Maven
@@ -79,14 +79,14 @@ compile 'ru.ispras:atr4s:1.2'
 <dependency>
     <groupId>ru.ispras</groupId>
     <artifactId>atr4s</artifactId>
-    <version>1.2</version>
+    <version>1.2.1</version>
 </dependency>
 ```
 
 ### SBT
 
 ```
-libraryDependencies += "ru.ispras" % "atr4s" % "1.2"
+libraryDependencies += "ru.ispras" % "atr4s" % "1.2.1"
 ```
 
 ## Building from Sources

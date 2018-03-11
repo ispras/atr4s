@@ -39,7 +39,7 @@ task wrapper(type: Wrapper) {
 def artifactName = 'atr4s'
 def siteUrl = 'https://github.com/ispras/' + artifactName     // Homepage URL of the library
 def gitUrl = 'https://github.com/ispras/' + artifactName + '.git'   // Git repository URL
-def artifactVersion = '1.2'
+def artifactVersion = '1.2.1'
 
 // custom tasks for creating source/javadoc jars
 task sourcesJar(type: Jar, dependsOn: classes) {
@@ -135,9 +135,9 @@ dependencies {
 
     // Apache OpenNLP preprocessing
     compile group: 'org.apache.opennlp', name: 'opennlp-tools', version: '1.6.0'
-0
+
     //for PU-ATR
-    compile 'ru.ispras:pu4spark:0.1'
+    compile 'ru.ispras:pu4spark:0.3'
 
     //for PU-ATR and Voting
     compile group: 'org.apache.spark', name: 'spark-core_2.11', version: '1.6.2'
