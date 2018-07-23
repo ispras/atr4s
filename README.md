@@ -62,6 +62,14 @@ Namely,
 
 Datasets used in the experiments can be downloaded from [Release page](https://github.com/ispras/atr4s/releases/tag/v1.2).
 
+### OS
+
+PU algorithm may or may not work on Windows due to some bugs in Spark (see relevant questions on Stackoverflow, 
+maybe they help you: 
+[1](https://stackoverflow.com/questions/41825871/exception-while-deleting-spark-temp-dir-in-windows-7-64-bit),
+[2](https://stackoverflow.com/questions/31274170/spark-error-error-utils-exception-while-deleting-spark-temp-dir), 
+[3](https://stackoverflow.com/questions/43731967/spark-failed-to-delete-temp-directory)).
+
 ## Linking
 
 The library is published into Maven central and JCenter.
@@ -70,7 +78,7 @@ Add the following lines depending on your build system.
 ### Gradle
 
 ```gradle
-compile 'ru.ispras:atr4s:1.2.1'
+compile 'ru.ispras:atr4s:1.2.2'
 ```
 
 ### Maven
@@ -79,14 +87,14 @@ compile 'ru.ispras:atr4s:1.2.1'
 <dependency>
     <groupId>ru.ispras</groupId>
     <artifactId>atr4s</artifactId>
-    <version>1.2.1</version>
+    <version>1.2.2</version>
 </dependency>
 ```
 
 ### SBT
 
 ```
-libraryDependencies += "ru.ispras" % "atr4s" % "1.2.1"
+libraryDependencies += "ru.ispras" % "atr4s" % "1.2.2"
 ```
 
 ## Building from Sources

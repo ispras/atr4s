@@ -20,7 +20,7 @@ case class LinkProbability(threshold: Double = 0.018,
                            fileName: String = "./data/info-measure.txt") extends FeatureConfig {
   //TODO recompute info-measure for newer Wikipedia and better lemmatizer
   override def build(candidates: Seq[TermCandidate], dataset: DSDataset): FeatureComputer = {
-    val term2LinkProb = Source.fromFile(fileName).getLines().map(line => {
+    val term2LinkProb = Source.fromFile(fileName, enc = "utf8").getLines().map(line => {
       val termInfoMeasure = line.split('\t')
       termInfoMeasure(2) -> termInfoMeasure(0).toDouble / termInfoMeasure(1).toDouble
     }).toMap
